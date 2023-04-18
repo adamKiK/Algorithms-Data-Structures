@@ -7,7 +7,8 @@ class BinarySearchTree:
         self.input_array = input_array
         self.searched_value = None
         self.output_index = 0
-        self.output_array = [None] * (len(self.input_array) ** 2)
+        self.maximum_output_array_size = (len(self.input_array) ** 2)
+        self.output_array = [None] * self.maximum_output_array_size
 
     def search_value_index(self, searched_value):
         self.searched_value = searched_value
@@ -15,7 +16,7 @@ class BinarySearchTree:
 
     def return_equal_value_index(self, root_node_index=0):
         self.output_index = root_node_index
-        self.return_next_free_or_equal_index()
+        return self.return_next_free_or_equal_index()
 
     def is_valid_node(self, child_node_index):
         node_index_smaller_than_array_size = child_node_index < len(self.output_array)
@@ -36,6 +37,8 @@ class BinarySearchTree:
             self.output_index = left_child_node_index
         elif self.is_valid_node(right_child_node_index) and self.searched_value > root_node_value:
             self.output_index = right_child_node_index
+        elif self.searched_value == root_node_value:
+            return self.output_index
         else:
             if self.searched_value < root_node_value:
                 return self.return_next_free_or_equal_index(left_child_node_index)
@@ -60,7 +63,3 @@ class BinarySearchTree:
         new_value_index = self.return_next_free_or_equal_index()
         self.output_array[new_value_index] = input_value
 
-
-bst = BinarySearchTree(array)
-bst.create_binary_search_tree()
-print(bst.output_array)
