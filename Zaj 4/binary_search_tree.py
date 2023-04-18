@@ -7,8 +7,7 @@ class BinarySearchTree:
         self.input_array = input_array
         self.searched_value = None
         self.output_index = 0
-        # self.output_array = [None] * len(self.input_array)
-        self.output_array = [None] * 130
+        self.output_array = [None] * (len(self.input_array) ** 2)
 
     def search_value_index(self, searched_value):
         self.searched_value = searched_value
@@ -19,10 +18,11 @@ class BinarySearchTree:
         self.return_next_free_or_equal_index()
 
     def is_valid_node(self, child_node_index):
-        child_node_is_none = self.output_array[child_node_index] is None
         node_index_smaller_than_array_size = child_node_index < len(self.output_array)
-        if child_node_is_none and node_index_smaller_than_array_size:
-            return True
+        if node_index_smaller_than_array_size:
+            child_node_is_none = self.output_array[child_node_index] is None
+            if child_node_is_none:
+                return True
         else:
             return False
 
