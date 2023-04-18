@@ -7,7 +7,8 @@ class BinarySearchTree:
         self.input_array = input_array
         self.searched_value = None
         self.output_index = 0
-        self.output_array = [None] * len(self.input_array)
+        # self.output_array = [None] * len(self.input_array)
+        self.output_array = [None] * 130
 
     def search_value_index(self, searched_value):
         self.searched_value = searched_value
@@ -18,16 +19,9 @@ class BinarySearchTree:
         self.return_next_free_or_equal_index()
 
     def is_valid_node(self, child_node_index):
-        next_child_node_index = child_node_index * 2
-        if self.searched_value > self.output_array[child_node_index]:
-            next_child_node_index += 2
-        else:
-            next_child_node_index += 1
-
-        child_node_is_not_none = self.output_array[child_node_index] is not None
-        next_child_node_is_not_none = self.output_array[next_child_node_index] is not None
-
-        if child_node_is_not_none and next_child_node_is_not_none:
+        child_node_is_none = self.output_array[child_node_index] is None
+        node_index_smaller_than_array_size = child_node_index < len(self.output_array)
+        if child_node_is_none and node_index_smaller_than_array_size:
             return True
         else:
             return False
@@ -39,11 +33,15 @@ class BinarySearchTree:
         right_child_node_index = root_node_index * 2 + 2
 
         if self.is_valid_node(left_child_node_index) and self.searched_value < root_node_value:
-            return self.return_equal_value_index(left_child_node_index)
+            self.output_index = left_child_node_index
         elif self.is_valid_node(right_child_node_index) and self.searched_value > root_node_value:
-            return self.return_equal_value_index(right_child_node_index)
+            self.output_index = right_child_node_index
         else:
-            return self.output_index
+            if self.searched_value < root_node_value:
+                return self.return_next_free_or_equal_index(left_child_node_index)
+            else:
+                return self.return_next_free_or_equal_index(right_child_node_index)
+        return self.output_index
 
     def create_binary_search_tree(self):
         self.create_first_tree_node()
