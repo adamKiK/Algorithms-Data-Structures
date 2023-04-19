@@ -1,6 +1,3 @@
-array = [13, 11, 17, 8, 7, 5, 18, 16, 20, 14, 4, 2, 1, 3, 12, 9, 10, 15, 19, 6]
-
-
 class BinarySearchTree:
     def __init__(self, input_array):
         # self.input_value = None
@@ -62,4 +59,3 @@ class BinarySearchTree:
         self.searched_value = input_value
         new_value_index = self.return_next_free_or_equal_index()
         self.output_array[new_value_index] = input_value
-
