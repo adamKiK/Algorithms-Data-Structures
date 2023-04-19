@@ -39,3 +39,4 @@ class Heap:
             self.swap(zero_index, last_unsorted_index)
             last_sorted_value = self.input_array.pop()
             self.sorted_array[last_unsorted_index] = last_sorted_value
+            
