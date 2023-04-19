@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 MIN_HEAP_INT = 0
 MAX_HEAP_INT = 5000
 REPEAT_TIMES = 100
-TEST_SIZES = [100, 500, 1000, 2000]
+TEST_SIZES = [100, 200]
 
 heap_recorded_execution_times_vector = [0]
 for array_size in TEST_SIZES:
@@ -31,18 +31,19 @@ for array_size in TEST_SIZES:
     random_int_vector = [i for i in range(1, array_size)]
     for i in range(REPEAT_TIMES):
         random.shuffle(random_int_vector)
-        bst = binary_search_tree.BinarySearchTree(random_int_vector)
-        bst.create_binary_search_tree()
+        bst = binary_search_tree.BinarySearchTree(random_int_vector[0])
+        for number in random_int_vector[1::]:
+            bst.insert(number)
         values_to_search = random.sample(random_int_vector, NUMBER_OF_VALUES_TO_SEARCH)
         start_time = time.time()
-        for j in range(NUMBER_OF_VALUES_TO_SEARCH):
-            bst.search_value_index(values_to_search[j])
-        delta_time.append(time.time() - start_time)
+        for number in values_to_search:
+            print(bst.search(number))
+        delta_time.append((time.time() - start_time)/10)
     bst_recorded_execution_times_vector.append(np.mean(delta_time))
 
 """ CREATE PLOT """
 
-x_sizes = [0, 100, 500, 1000, 2000]
+x_sizes = [0, 100, 200]
 
 fig = plt.figure()
 ax1 = fig.add_subplot(211)
