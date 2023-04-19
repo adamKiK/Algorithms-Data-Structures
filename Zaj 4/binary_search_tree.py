@@ -7,7 +7,7 @@ class BinarySearchTree:
         self.input_array = input_array
         self.searched_value = None
         self.output_index = 0
-        self.maximum_output_array_size = (len(self.input_array) ** 2)
+        self.maximum_output_array_size = (len(self.input_array) ** 3)
         self.output_array = [None] * self.maximum_output_array_size
 
     def search_value_index(self, searched_value):
