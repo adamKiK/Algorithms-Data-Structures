@@ -18,9 +18,9 @@ for array_size in TEST_SIZES:
     delta_time = []
     for i in range(REPEAT_TIMES):
         random_int_vector = list(np.random.randint(MIN_HEAP_INT, MAX_HEAP_INT, array_size))
-        start_time = time.time()
+        start_time = time.perf_counter_ns()
         heap.Heap(random_int_vector).heap_sort()
-        delta_time.append((time.time() - start_time)*MILISECOND)
+        delta_time.append((time.perf_counter_ns() - start_time))
     heap_recorded_execution_times_vector.append(np.mean(delta_time))
 
 """ BST TEST """
@@ -36,10 +36,10 @@ for array_size in TEST_SIZES:
         for number in random_int_vector[1::]:
             bst.insert(number)
         values_to_search = random.sample(random_int_vector, NUMBER_OF_VALUES_TO_SEARCH)
-        start_time = time.time()
+        start_time = time.perf_counter_ns()
         for number in values_to_search:
             bst.search(number)
-        delta_time.append(((time.time() - start_time)/NUMBER_OF_VALUES_TO_SEARCH)*MILISECOND)
+        delta_time.append(((time.perf_counter_ns() - start_time)/NUMBER_OF_VALUES_TO_SEARCH))
     bst_recorded_execution_times_vector.append(np.mean(delta_time))
 
 """ CREATE PLOT """
@@ -50,13 +50,13 @@ fig = plt.figure()
 ax1 = fig.add_subplot(211)
 plt.plot(x_sizes, heap_recorded_execution_times_vector, label="Heapsort", linestyle="-", color="y", linewidth=2)
 plt.legend()
-ax1.set_ylabel("Time [ms]")
+ax1.set_ylabel("Time [ns]")
 ax1.set_xlabel("Array size")
 
 ax2 = fig.add_subplot(212)
 plt.plot(x_sizes, bst_recorded_execution_times_vector, label="Binary Search Tree", linestyle="--", color="m", linewidth=2)
 plt.legend()
-ax2.set_ylabel("Time [ms]")
+ax2.set_ylabel("Time [ns]")
 ax2.set_xlabel("Array size")
 
 ax1.title.set_text('Heapsort')
