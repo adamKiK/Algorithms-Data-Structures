@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 """ HEAPSORT TEST """
-MILISECOND = 1000
 MIN_HEAP_INT = 0
 MAX_HEAP_INT = 5000
 REPEAT_TIMES = 100
