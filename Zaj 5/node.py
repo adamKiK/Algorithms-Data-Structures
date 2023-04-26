@@ -6,6 +6,12 @@ class Node:
         self.right_node = None
         self.encoding = None
 
+    def get_encoding(self):
+        return self.encoding
+
+    def get_char(self):
+        return self.character
+
     def set_encoding(self, encoding):
         self.encoding = encoding
 

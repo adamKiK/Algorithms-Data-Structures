@@ -1,6 +1,7 @@
 import huffman_coding as hc
-import time
 import matplotlib.pyplot as plt
+import time
+# import tabulate
 
 files_to_check_paths = ["D:\Projects\Algorytmy i struktury danych\Zaj 5\Test_Files\\1_wers.txt",
                         "D:\Projects\Algorytmy i struktury danych\Zaj 5\Test_Files\\3_wersy.txt",
@@ -37,6 +38,7 @@ def huffman_cycle(input_file):
     original_bit_number = huffman.original_bits_number
     compressed_bit_number = huffman.compressed_bit_number
     compression_percent = round((compressed_bit_number/original_bit_number)*100.00, 2)
+
     results["encoding_time"] = encoding_delta_time
     results["decoding_time"] = decoding_delta_time
     results["origin_size"] = huffman.original_bits_number
@@ -76,7 +78,7 @@ def create_plots():
     ax3.title.set_text('Decoding time')
     ax4.title.set_text('Compression level')
 
-    fig.suptitle("Huffmann's Coding Results")
+    fig.suptitle("Huffman's Coding Results")
     plt.show()
 
 

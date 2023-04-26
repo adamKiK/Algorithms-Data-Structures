@@ -15,6 +15,7 @@ class HuffmanCoding:
         self.decode_dict = dict()
         self.original_bits_number = len(input_string) * 8
         self.compressed_bit_number = 0
+        self.table_of_symbols_key_frequency_sets = []
 
     def get_top_tree_node(self):
         return self.top_tree_node
@@ -123,3 +124,11 @@ class HuffmanCoding:
                 output_string += self.decode_dict[symbol]
                 symbol = ""
         return output_string
+
+    def create_symbol_key_frequency_sets(self, current_node):
+        if current_node.has_char():
+            node_info = [current_node.character, current_node.encoding, current_node.frequency]
+            self.table_of_symbols_key_frequency_sets.append(node_info)
+        else:
+            self.create_symbol_key_frequency_sets(current_node.left_node)
+            self.create_symbol_key_frequency_sets(current_node.right_node)
