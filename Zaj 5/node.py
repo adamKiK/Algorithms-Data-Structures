@@ -9,8 +9,8 @@ class Node:
     def set_character(self, character):
         self.character = character
 
-    def set_frequency(self, new_frequancy):
-        self.frequency = new_frequancy
+    def set_frequency(self, new_frequency):
+        self.frequency = new_frequency
 
     def return_frequency(self):
         return self.frequency
