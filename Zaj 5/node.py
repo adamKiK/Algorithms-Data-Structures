@@ -21,12 +21,6 @@ class Node:
         else:
             return False
 
-    def get_encoding(self):
-        return self.encoding
-
-    def get_char(self):
-        return self.character
-
     def get_frequency(self):
         return self.frequency
 
