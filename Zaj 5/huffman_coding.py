@@ -3,6 +3,7 @@ import node
 
 class HuffmanCoding:
     def __init__(self, input_string):
+        self.encoded_text = None
         self.input_string = input_string
         self.char_frequency_table = []
         self.distinct_chars_in_frequency_table = []
@@ -97,3 +98,20 @@ class HuffmanCoding:
 
     def add_to_decode_dict(self, added_node):
         self.decode_dict[added_node.get_encoding()] = added_node.get_char()
+
+    def encode_text(self):
+        output_string = ""
+        for char in self.input_string:
+            output_string += self.encode_dict[char]
+        self.encoded_text = output_string
+        return output_string
+
+    def decode_text(self):
+        symbol = ""
+        output_string = ""
+        for char in self.encoded_text:
+            symbol += char
+            if symbol in self.decode_dict:
+                output_string += self.decode_dict[symbol]
+                symbol = ""
+        return output_string
