@@ -3,6 +3,7 @@ import node
 
 class HuffmanCoding:
     def __init__(self, input_string):
+        self.encoded_text = None
         self.input_string = input_string
         self.char_frequency_table = []
         self.distinct_chars_in_frequency_table = []
@@ -10,6 +11,10 @@ class HuffmanCoding:
         self.lowest_frequency_index = 0
         self.second_lowest_frequency_index = 1
         self.top_tree_node = None
+        self.encode_dict = dict()
+        self.decode_dict = dict()
+        self.original_bits_number = len(input_string) * 8
+        self.compressed_bit_number = 0
 
     def get_top_tree_node(self):
         return self.top_tree_node
@@ -75,11 +80,46 @@ class HuffmanCoding:
         encoding += "0"
         if parent_node.left_node.has_char():
             parent_node.left_node.set_encoding(encoding)
+            self.add_to_dictionaries(parent_node.left_node)
         else:
             self.encode_tree(parent_node.left_node, encoding)
 
         encoding = encoding[:-1] + "1"
         if parent_node.right_node.has_char():
             parent_node.right_node.set_encoding(encoding)
+            self.add_to_dictionaries(parent_node.right_node)
         else:
             self.encode_tree(parent_node.right_node, encoding)
+
+    def add_to_dictionaries(self, added_node):
+        self.add_to_encode_dict(added_node)
+        self.add_to_decode_dict(added_node)
+
+    def add_to_encode_dict(self, added_node):
+        self.encode_dict[added_node.get_char()] = added_node.get_encoding()
+
+    def add_to_decode_dict(self, added_node):
+        self.decode_dict[added_node.get_encoding()] = added_node.get_char()
+
+    def increment_bit_number(self, symbol):
+        used_bits_number = len(symbol)
+        self.compressed_bit_number += used_bits_number
+
+    def encode_text(self):
+        output_string = ""
+        for char in self.input_string:
+            symbol = self.encode_dict[char]
+            output_string += symbol
+            self.increment_bit_number(symbol)
+        self.encoded_text = output_string
+        return output_string
+
+    def decode_text(self):
+        symbol = ""
+        output_string = ""
+        for char in self.encoded_text:
+            symbol += char
+            if symbol in self.decode_dict:
+                output_string += self.decode_dict[symbol]
+                symbol = ""
+        return output_string
