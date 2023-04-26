@@ -13,6 +13,8 @@ class HuffmanCoding:
         self.top_tree_node = None
         self.encode_dict = dict()
         self.decode_dict = dict()
+        self.original_bits_number = len(input_string) * 8
+        self.compressed_bit_number = 0
 
     def get_top_tree_node(self):
         return self.top_tree_node
@@ -99,10 +101,16 @@ class HuffmanCoding:
     def add_to_decode_dict(self, added_node):
         self.decode_dict[added_node.get_encoding()] = added_node.get_char()
 
+    def increment_bit_number(self, symbol):
+        used_bits_number = len(symbol)
+        self.compressed_bit_number += used_bits_number
+
     def encode_text(self):
         output_string = ""
         for char in self.input_string:
-            output_string += self.encode_dict[char]
+            symbol = self.encode_dict[char]
+            output_string += symbol
+            self.increment_bit_number(symbol)
         self.encoded_text = output_string
         return output_string
 
