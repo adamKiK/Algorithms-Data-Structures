@@ -6,13 +6,28 @@ class Node:
         self.right_node = None
         self.encoding = None
 
-    def set_character(self, character):
+    def set_encoding(self, encoding):
+        self.encoding = encoding
+
+    def set_char(self, character):
         self.character = character
 
     def set_frequency(self, new_frequency):
         self.frequency = new_frequency
 
-    def return_frequency(self):
+    def has_char(self):
+        if self.character is not None:
+            return self.character
+        else:
+            return False
+
+    def get_encoding(self):
+        return self.encoding
+
+    def get_char(self):
+        return self.character
+
+    def get_frequency(self):
         return self.frequency
 
     def equal_characters(self, new_character):
