@@ -144,6 +144,9 @@ class Game:
                 self.game_round()
                 self.sum_up_round_results()
                 self.round_number += 1
+                for i in range(5, -1, -1):
+                    print("Next round in " + str(i))
+                    time.sleep(1)
             else:
                 self.print_final_result()
                 break
