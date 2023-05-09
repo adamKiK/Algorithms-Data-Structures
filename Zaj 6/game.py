@@ -14,23 +14,11 @@ class Game:
         self.player_1 = player.Player()
         self.player_2 = player.Player()
 
-    def print_possible_game_types(self) -> None:
-        print("Choose Your Match Count")
-        print("______________")
-        game_types_length = len(self.game_types)
-        for game_type_index in range(game_types_length):
-            game_type = self.game_types[game_type_index]
-            time.sleep(0.25)
-            print(game_type_index + 1, game_type)
-
-    def set_player_names(self):
+    def set_player_names(self) -> None:
         print("Let's set the first player's name!")
         self.player_1.set_player_name()
         print("Let's set the second player's name!")
         self.player_2.set_player_name()
-
-    def input_is_valid(self, user_input) -> bool:
-        return int(user_input) > 0 and int(user_input) - 1 < len(self.game_types)
 
     def set_match_count(self) -> None:
         while True:
@@ -41,6 +29,20 @@ class Game:
             else:
                 print("\nYour input has to be a number. Try again!")
 
+    def set_players_figure(self, selected_player: player) -> None:
+        chosen_figure_index = int(input("Enter the index of your chosen figure: ")) - 1
+        figure = self.available_figures[chosen_figure_index]
+        selected_player.set_figure(figure)
+
+    def print_possible_game_types(self) -> None:
+        print("Choose Your Match Count")
+        print("______________")
+        game_types_length = len(self.game_types)
+        for game_type_index in range(game_types_length):
+            game_type = self.game_types[game_type_index]
+            time.sleep(0.25)
+            print(game_type_index + 1, game_type)
+
     def print_figure_set(self) -> None:
         figure_set_size = len(self.available_figures)
         for figure_index in range(figure_set_size):
@@ -48,18 +50,16 @@ class Game:
             time.sleep(0.25)
             print(indexed_figure)
 
+    def input_is_valid(self, user_input) -> bool:
+        return int(user_input) > 0 and int(user_input) - 1 < len(self.game_types)
+
     def shuffle_figure_set(self) -> None:
         random.shuffle(self.available_figures)
 
-    def set_players_figure(self, selected_player: player):
-        chosen_figure_index = int(input("Enter the index of your chosen figure: ")) - 1
-        figure = self.available_figures[chosen_figure_index]
-        selected_player.set_figure(figure)
-
-    def get_players_score(self):
+    def get_players_score(self) -> str:
         return str(self.player_1.match_points) + ":" + str(self.player_2.match_points)
 
-    def evaluate_result(self):
+    def evaluate_result(self) -> player:
         player1_figure = self.player_1.get_figure()
         player2_figure = self.player_2.get_figure()
 
@@ -81,7 +81,7 @@ class Game:
             else:
                 return self.player_2
 
-    def sum_up_round_results(self):
+    def sum_up_round_results(self) -> None:
         round_winner = self.evaluate_result()
         if round_winner is not None:
             round_winner.add_match_point()
@@ -90,7 +90,7 @@ class Game:
             print("This is a TIE!")
             print("You both chose -> " + self.player_1.get_figure() + " vs " + self.player_2.get_figure())
 
-    def player_turn(self, current_player: player):
+    def player_turn(self, current_player: player) -> None:
         current_player_name = current_player.get_name()
         if current_player == self.player_1:
             other_player = self.player_2
