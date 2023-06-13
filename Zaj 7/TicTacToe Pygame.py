@@ -19,7 +19,7 @@ class TicTacToe:
         self.clock = pygame.time.Clock()
 
         # Initialize the board
-        self.board = [[' ' for i in range(BOARD_SIZE)] for j in range(BOARD_SIZE)]
+        self.board = [[' ' for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 
         # Current player
         self.current_player = 'X'
@@ -83,9 +83,15 @@ class TicTacToe:
         return False
 
     def check_rows(self, player):
+        count = 0
         for row in self.board:
-            if row.count(player) == WIN_MARK_COUNT:
-                return True
+            for cell in row:
+                if cell == player:
+                    count += 1
+                else:
+                    count = 0
+                if count == WIN_MARK_COUNT:
+                    return True
 
     def check_columns(self, player):
         count = 0
@@ -93,23 +99,39 @@ class TicTacToe:
             for row in range(BOARD_SIZE):
                 if self.board[row][col] == player:
                     count += 1
+                else:
+                    count = 0
                 if count == WIN_MARK_COUNT:
                     return True
 
     def check_diagonal(self, player):
-        count = 0
-        for i in range(BOARD_SIZE):
-            if self.board[i][i] == player:
-                count += 1
-            if count == WIN_MARK_COUNT:
-                return True
+        mark_found = False
+        for row in range(BOARD_SIZE):
+            for column in range(BOARD_SIZE):
+                if self.board[row][column] != ' ':
+                    mark_found = True
 
-        count = 0
-        for i in range(BOARD_SIZE):
-            if self.board[i][BOARD_SIZE - 1 - i] == player:
-                count += 1
-            if count == WIN_MARK_COUNT:
-                return True
+                if mark_found:
+                    count = 0
+                    for i in range(WIN_MARK_COUNT):
+                        if (row + 1) < BOARD_SIZE and (column + 1) < BOARD_SIZE:
+                            if self.board[row + i][column + i] == player:
+                                count += 1
+                            else:
+                                count = 0
+                            if count == WIN_MARK_COUNT:
+                                return True
+
+                    count = 0
+                    for i in range(WIN_MARK_COUNT):
+                        if (row + 1) < BOARD_SIZE and (column - 1) > -1:
+                            if self.board[row + i][column - i] == player:
+                                count += 1
+                            else:
+                                count = 0
+                            if count == WIN_MARK_COUNT:
+                                return True
+                mark_found = False
 
     def play_game(self):
         game_continue = True
